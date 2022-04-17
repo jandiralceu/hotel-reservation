@@ -10,6 +10,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Customer: " + customer.fullName();
     }
 }

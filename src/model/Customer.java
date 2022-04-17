@@ -3,9 +3,9 @@ package model;
 import java.util.regex.Pattern;
 
 public class Customer {
-    private String firstName;
-    private String lastName;
-    private String email;
+    protected String firstName;
+    protected String lastName;
+    protected String email;
 
     public Customer(String firstName, String lastName, String email) {
         String emailRegex = "^(.+)@(.+).(.+)$";
@@ -20,8 +20,12 @@ public class Customer {
         this.email = email;
     }
 
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "Name: " + fullName() + "\n" + "E-mail: " + email;
     }
 }
