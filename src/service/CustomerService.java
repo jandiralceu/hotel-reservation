@@ -2,12 +2,22 @@ package service;
 
 import model.Customer;
 
-import java.util.Collection;
+import java.util.*;
 
 public class CustomerService {
-    public void addCustomer(String email, String firstName, String lastname) {}
+    private Map<String, Customer> customers = new HashMap<String, Customer>();
 
-    public Customer getCustomer(String customerEmail) {}
+    public CustomerService() {}
 
-    public Collection<Customer> getAllCustomer() {}
+    public void addCustomer(String email, String firstName, String lastname) {
+        customers.put(email, new Customer(firstName, lastname, email));
+    }
+
+    public Customer getCustomer(String customerEmail) {
+        return customers.get(customerEmail);
+    }
+
+    public Collection<Customer> getAllCustomer() {
+        return customers.values();
+    }
 }
