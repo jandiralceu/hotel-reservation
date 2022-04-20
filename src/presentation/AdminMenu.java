@@ -4,19 +4,18 @@ import java.util.Scanner;
 
 public class AdminMenu {
     public static void init() {
-        String menu = "Admin Menu\n" +
-                "--------------------------------------------------------\n" +
-                "1. See all Customers\n" +
-                "2. See all Rooms\n" +
-                "3. See all Reservations\n" +
-                "4. Add a Room\n" +
-                "5. Back to Main Menu\n" +
-                "--------------------------------------------------------\n" +
-                "Please, select a number for the menu option";
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
-            System.out.println(menu);
+            System.out.println("Admin Menu\n" +
+                    "--------------------------------------------------------\n" +
+                    "1. See all Customers\n" +
+                    "2. See all Rooms\n" +
+                    "3. See all Reservations\n" +
+                    "4. Add a Room\n" +
+                    "5. Back to Main Menu\n" +
+                    "--------------------------------------------------------\n" +
+                    "Please, select a number for the menu option");
 
             try {
                 int menuOptionSelected = scanner.nextInt();

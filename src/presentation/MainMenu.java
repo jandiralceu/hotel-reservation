@@ -5,19 +5,17 @@ import java.util.Scanner;
 public class MainMenu {
     public static void init() {
         Scanner scanner = new Scanner(System.in);
-        String menu =
-                "Main Menu\n" +
-                        "--------------------------------------------------------\n" +
-                        "1. Find and reserve a room\n" +
-                        "2. See my reservations\n" +
-                        "3. Create an account\n" +
-                        "4. Admin\n" +
-                        "5. Exit\n" +
-                        "--------------------------------------------------------\n" +
-                        "Please, select a number for the menu option";
 
         while(true) {
-            System.out.println(menu);
+            System.out.println("Main Menu\n" +
+                    "--------------------------------------------------------\n" +
+                    "1. Find and reserve a room\n" +
+                    "2. See my reservations\n" +
+                    "3. Create an account\n" +
+                    "4. Admin\n" +
+                    "5. Exit\n" +
+                    "--------------------------------------------------------\n" +
+                    "Please, select a number for the menu option");
 
             try {
                 int menuOptionSelected = scanner.nextInt();
