@@ -53,15 +53,27 @@ public class MainMenu {
     public static void createAccount() {
         while (true) {
             Scanner scanner = new Scanner(System.in);
+            String firstName = "";
+            String lastName = "";
+            String email = "";
 
-            System.out.println("Whats your first name?");
-            String firstName = scanner.nextLine();
+            do {
+                System.out.println("Whats your first name?");
+                firstName = scanner.nextLine();
+            } while (firstName.isBlank());
 
-            System.out.println("\nWhats your last name?");
-            String lastName = scanner.nextLine();
+            do {
+                System.out.println("\nWhats your last name?");
+                lastName = scanner.nextLine();
+            } while (lastName.isBlank());
 
-            System.out.println("\nWhats your email?");
-            String email = scanner.nextLine();
+            do {
+                System.out.println("\nWhats your email?");
+                email = scanner.nextLine();
+            } while (email.isBlank());
+
+            // Save customer here
+
 
             System.out.println("\nName: " + firstName + " " + lastName + ", Email" +
                     ": " + email);
