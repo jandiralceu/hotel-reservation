@@ -1,9 +1,17 @@
 package presentation;
 
+import model.Customer;
+import model.Room;
+import model.RoomType;
+import service.CustomerService;
+import service.ReservationService;
+
 import java.util.Scanner;
 
 public class AdminMenu {
     static Scanner scanner = new Scanner(System.in);
+    static CustomerService customerService = CustomerService.getInstance();
+    static ReservationService reservationService = ReservationService.getInstance();
 
     public static void init() {
         while(true) {
@@ -49,11 +57,19 @@ public class AdminMenu {
     }
 
     public static void showAllRooms() {
-        System.out.println("\nShow all Rooms");
+//        for (Room room : roomService.getRooms()) {
+//            System.out.println(room.toString());
+//        }
+
+        System.out.println("\n");
     }
 
     public static void showAllCustomers() {
-        System.out.println("\nShow all customers");
+        for (Customer customer : customerService.getAllCustomers()) {
+            System.out.println(customer.toString());
+        }
+
+        System.out.println("\n");
     }
 
     public static void showAllReservations() {
@@ -62,21 +78,21 @@ public class AdminMenu {
 
     public static void addRoom() {
         while(true) {
-            int roomNumber = 0;
+            String roomNumber = "";
             double pricePerNight = 0.0;
-            int roomType = 0;
+            RoomType roomType = null;
 
             do {
                 System.out.println("Enter room number");
 
                 try {
-                    roomNumber = scanner.nextInt();
+                    roomNumber = scanner.next();
                 } catch (Exception e) {
                     System.out.println("Please, provide a valid room number.");
                 } finally {
                     scanner.nextLine();
                 }
-            } while (roomNumber == 0);
+            } while (roomNumber.isBlank());
 
             do {
                 System.out.println("Enter price per night");
@@ -98,7 +114,8 @@ public class AdminMenu {
                     int getRoomType = scanner.nextInt();
 
                     if (getRoomType == 1 || getRoomType == 2) {
-                        roomType = getRoomType;
+                        roomType = getRoomType == 1 ? RoomType.SINGLE :
+                                RoomType.DOUBLE;
                     } else {
                        throw new Exception();
                     }
@@ -107,9 +124,14 @@ public class AdminMenu {
                 } finally {
                     scanner.nextLine();
                 }
-            } while (roomType == 0);
+            } while (roomType == null);
 
-
+            try {
+                System.out.println("Teste");
+//                roomService.addRoom(pricePerNight, roomNumber, roomType);
+            } catch (Exception error) {
+                System.out.println(error.toString());
+            }
 
             System.out.println("\nWould you like to add another room? y/n");
             char answer = scanner.next().toLowerCase().charAt(0);

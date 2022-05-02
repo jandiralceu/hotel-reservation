@@ -1,11 +1,14 @@
 package presentation;
 
+import service.CustomerService;
+
 import java.util.Scanner;
 
 public class MainMenu {
-    public static void init() {
-        Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
+    static CustomerService customerService = CustomerService.getInstance();
 
+    public static void init() {
         while(true) {
             System.out.println("Main Menu\n" +
                     "--------------------------------------------------------\n" +
@@ -43,7 +46,7 @@ public class MainMenu {
 
                 if (menuOptionSelected == 5) break;
             } catch (Exception error) {
-                System.out.println("\nPlease, choose one of options bellow");
+                System.out.println("\nPlease, choose one of options bellow\n");
             } finally {
                 scanner.nextLine();
             }
@@ -58,25 +61,26 @@ public class MainMenu {
             String email = "";
 
             do {
-                System.out.println("Whats your first name?");
+                System.out.println("Email:");
+                email = scanner.nextLine();
+            } while (email.isBlank());
+
+            do {
+                System.out.println("First name:");
                 firstName = scanner.nextLine();
             } while (firstName.isBlank());
 
             do {
-                System.out.println("\nWhats your last name?");
+                System.out.println("Last name:");
                 lastName = scanner.nextLine();
             } while (lastName.isBlank());
 
-            do {
-                System.out.println("\nWhats your email?");
-                email = scanner.nextLine();
-            } while (email.isBlank());
+            try {
+                customerService.addCustomer(email, firstName, lastName);
+            } catch (Exception error) {
+                System.out.println(error.toString());
+            }
 
-            // Save customer here
-
-
-            System.out.println("\nName: " + firstName + " " + lastName + ", Email" +
-                    ": " + email);
 
             System.out.println("\nWould you like to create other account? y/n");
             char answer = scanner.next().toLowerCase().charAt(0);
@@ -86,7 +90,10 @@ public class MainMenu {
     }
 
     public static void findAndReserveRoom() {
+        while (true) {
+
         System.out.println("\nFind and Reserve Room");
+        }
     }
 
     public static void showMyReservations() {
