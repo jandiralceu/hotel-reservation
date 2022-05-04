@@ -15,17 +15,6 @@ public class Reservation {
         this.checkoutDate = checkoutDate;
     }
 
-    @Override
-    public String toString() {
-        return "Customer: " + customer.fullName() + "\n" +
-                "Room number: " + room.getRoomNumber() + "\n" +
-                "Room type: " + (room.getRoomType() == RoomType.SINGLE ?
-                "Single" : "Double") + "\n" +
-                "Total: $" + room.getRoomPrice() + "\n" +
-                "Check-in: " + checkInDate.toString() + "\t" +
-                "Check-out: " + checkoutDate.toString() + "\n";
-    }
-
     public Customer getCustomer() {
         return customer;
     }
@@ -42,8 +31,14 @@ public class Reservation {
         return checkoutDate;
     }
 
-    public boolean isFree(Date startDate, Date endDate) {
-        return startDate.compareTo(getCheckInDate()) >= 0 && startDate.compareTo(getCheckoutDate()) <= 0
-                && endDate.compareTo(getCheckInDate()) >= 0 && endDate.compareTo(getCheckoutDate()) <= 0;
+    @Override
+    public String toString() {
+        return "Customer: " + customer.fullName() + "\n" +
+                "Room number: " + room.getRoomNumber() + "\n" +
+                "Room type: " + (room.getRoomType() == RoomType.SINGLE ?
+                "Single" : "Double") + "\n" +
+                "Total: $" + room.getRoomPrice() + "\n" +
+                "Check-in: " + checkInDate.toString() + "\t" +
+                "Check-out: " + checkoutDate.toString() + "\n";
     }
 }

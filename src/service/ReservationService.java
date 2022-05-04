@@ -38,6 +38,11 @@ public class ReservationService {
             throw new InvalidDateException("Check-out must be after check-in.");
         }
 
+        if (checkInDate.before(new Date())) {
+            throw new InvalidDateException("Please, provide present and " +
+                    "future date");
+        }
+
         List<String> unAvailableRooms = new ArrayList<String>();
 
         for (Reservation reservation : reservations) {
@@ -67,9 +72,16 @@ public class ReservationService {
     }
 
     public void printAllReservations() {
-        for (Reservation reservation : reservations) {
-            System.out.println(reservation.toString());
+        if (reservations.isEmpty()) {
+            System.out.println("Sorry, there is no reservation. Go to main " +
+                    "menu and start creating.");
+        } else {
+            for (Reservation reservation : reservations) {
+                System.out.println(reservation.toString());
+            }
         }
+
+        System.out.println("\n");
     }
 
     public static ReservationService getInstance() {

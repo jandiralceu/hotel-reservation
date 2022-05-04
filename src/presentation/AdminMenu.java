@@ -1,17 +1,18 @@
 package presentation;
 
+import api.AdminResource;
 import model.Customer;
+import model.IRoom;
 import model.Room;
 import model.RoomType;
-import service.CustomerService;
-import service.ReservationService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminMenu {
     static Scanner scanner = new Scanner(System.in);
-    static CustomerService customerService = CustomerService.getInstance();
-    static ReservationService reservationService = ReservationService.getInstance();
+    static AdminResource adminResource = AdminResource.getInstance();
 
     public static void init() {
         while(true) {
@@ -56,27 +57,25 @@ public class AdminMenu {
         }
     }
 
-    public static void showAllRooms() {
-//        for (Room room : roomService.getRooms()) {
-//            System.out.println(room.toString());
-//        }
-
-        System.out.println("\n");
+    public static void showAllCustomers() {
+        for (Customer customer : adminResource.getAllCustomers()) {
+            System.out.println(customer);
+        }
     }
 
-    public static void showAllCustomers() {
-        for (Customer customer : customerService.getAllCustomers()) {
-            System.out.println(customer.toString());
+    public static void showAllRooms() {
+        for (IRoom room : adminResource.getAllRooms()) {
+            System.out.println(room);
         }
-
-        System.out.println("\n");
     }
 
     public static void showAllReservations() {
-        System.out.println("\nShow All Reservations");
+        adminResource.displayAllReservations();
     }
 
     public static void addRoom() {
+        List<IRoom> rooms = new ArrayList<IRoom>();
+
         while(true) {
             String roomNumber = "";
             double pricePerNight = 0.0;
@@ -120,7 +119,7 @@ public class AdminMenu {
                        throw new Exception();
                     }
                 } catch (Exception e) {
-                    System.out.println("Please, provide a valid room type.");
+                    System.out.println(e.toString());
                 } finally {
                     scanner.nextLine();
                 }
@@ -128,15 +127,19 @@ public class AdminMenu {
 
             try {
                 System.out.println("Teste");
-//                roomService.addRoom(pricePerNight, roomNumber, roomType);
             } catch (Exception error) {
                 System.out.println(error.toString());
             }
 
+            rooms.add(new Room(pricePerNight, roomNumber, roomType));
+
             System.out.println("\nWould you like to add another room? y/n");
             char answer = scanner.next().toLowerCase().charAt(0);
 
-            if (answer == 'n') break;
+            if (answer == 'n') {
+                adminResource.addRoom(rooms);
+                break;
+            }
         }
     }
 }
