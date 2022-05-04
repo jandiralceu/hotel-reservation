@@ -1,7 +1,9 @@
 package service;
 
 import error.InvalidDateException;
-import model.*;
+import model.Customer;
+import model.IRoom;
+import model.Reservation;
 
 import java.util.*;
 
@@ -10,7 +12,16 @@ public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<Reservation>();
     private final Map<String, IRoom> rooms = new HashMap<String, IRoom>();
 
-    private ReservationService() {}
+    private ReservationService() {
+    }
+
+    public static ReservationService getInstance() {
+        if (instance == null) {
+            instance = new ReservationService();
+        }
+
+        return instance;
+    }
 
     public void addRoom(IRoom room) {
         rooms.put(room.getRoomNumber(), room);
@@ -52,7 +63,7 @@ public class ReservationService {
             }
         }
 
-        Map<String, IRoom> availableRooms = rooms;
+        Map<String, IRoom> availableRooms = new HashMap<>(rooms);
 
         for (String room : unAvailableRooms) {
             availableRooms.remove(room);
@@ -63,7 +74,7 @@ public class ReservationService {
 
     public Collection<Reservation> getCustomersReservation(Customer customer) {
         List<Reservation> userReservation = new ArrayList<Reservation>();
-        for (Reservation reservation: reservations) {
+        for (Reservation reservation : reservations) {
             if (reservation.getCustomer().getEmail().equals(customer.getEmail())) {
                 userReservation.add(reservation);
             }
@@ -83,13 +94,5 @@ public class ReservationService {
         }
 
         System.out.println("");
-    }
-
-    public static ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
-        }
-
-        return instance;
     }
 }

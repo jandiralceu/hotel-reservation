@@ -27,7 +27,7 @@ public class Room implements IRoom {
     }
 
     public String getRoomTypeDescription() {
-        return enumeration  == RoomType.SINGLE ? "Single bed" : "Double bed";
+        return enumeration == RoomType.SINGLE ? "Single bed" : "Double bed";
     }
 
     public boolean isFree() {

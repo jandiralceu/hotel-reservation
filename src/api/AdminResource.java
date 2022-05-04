@@ -15,7 +15,16 @@ public class AdminResource {
     private final CustomerService customerService =
             CustomerService.getInstance();
 
-    private AdminResource() {}
+    private AdminResource() {
+    }
+
+    public static AdminResource getInstance() {
+        if (instance == null) {
+            instance = new AdminResource();
+        }
+
+        return instance;
+    }
 
     public void addRoom(List<IRoom> rooms) {
         for (IRoom room : rooms) {
@@ -33,13 +42,5 @@ public class AdminResource {
 
     public void displayAllReservations() {
         reservationService.printAllReservations();
-    }
-
-    public static AdminResource getInstance() {
-        if (instance == null) {
-            instance = new AdminResource();
-        }
-
-        return instance;
     }
 }

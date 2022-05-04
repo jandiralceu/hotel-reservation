@@ -12,7 +12,8 @@ public class Customer {
         Pattern pattern = Pattern.compile(emailRegex);
 
         if (!pattern.matcher(email).matches()) {
-            throw new IllegalArgumentException("Please, provide a valid " +
+            throw new IllegalArgumentException("Error on creating " +
+                    "account. Please, provide a valid " +
                     "email. \nExpected format: someone@example.com");
         }
 

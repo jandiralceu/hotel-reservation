@@ -1,5 +1,6 @@
 package model;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -8,7 +9,6 @@ public class Reservation {
     private final IRoom room;
     private final Date checkInDate;
     private final Date checkoutDate;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
 
     public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkoutDate) {
         this.customer = customer;
@@ -35,11 +35,14 @@ public class Reservation {
 
     @Override
     public String toString() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
+
         return "Customer: " + customer.fullName() + "\n" +
                 "Room number: " + room.getRoomNumber() + "\n" +
                 "Room type: " + (room.getRoomType() == RoomType.SINGLE ?
                 "Single" : "Double") + " bed\n" +
-                "Price: $" + room.getRoomPrice() + " per night\n" +
+                "Price: $" + decimalFormat.format(room.getRoomPrice()) + " per night\n" +
                 "Check-in: " + dateFormat.format(checkInDate) + "\t" +
                 "Check-out: " + dateFormat.format(checkoutDate) + "\n";
     }

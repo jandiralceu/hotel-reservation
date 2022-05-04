@@ -14,7 +14,7 @@ public class AdminMenu {
     public static void init() {
         Scanner scanner = new Scanner(System.in);
 
-        while(true) {
+        while (true) {
             System.out.println("Admin Menu\n" +
                     "--------------------------------------------------------\n" +
                     "1. See all Customers\n" +
@@ -28,7 +28,7 @@ public class AdminMenu {
             try {
                 int menuOptionSelected = scanner.nextInt();
 
-                switch(menuOptionSelected) {
+                switch (menuOptionSelected) {
                     case 1:
                         AdminMenu.showAllCustomers();
                         break;
@@ -67,7 +67,7 @@ public class AdminMenu {
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
-            System.out.println("\n");
+            System.out.println("");
         }
     }
 
@@ -131,7 +131,7 @@ public class AdminMenu {
                         pricePerNight = tempPriceNight;
                     }
                 } catch (NumberFormatException | InputMismatchException error) {
-                    if (error instanceof  InputMismatchException) {
+                    if (error instanceof InputMismatchException) {
                         System.out.println("Please, provide a valid price. " +
                                 "eg: 120");
                     }

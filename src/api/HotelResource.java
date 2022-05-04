@@ -15,6 +15,14 @@ public class HotelResource {
     CustomerService customerService = CustomerService.getInstance();
     ReservationService reservationService = ReservationService.getInstance();
 
+    public static HotelResource getInstance() {
+        if (instance == null) {
+            instance = new HotelResource();
+        }
+
+        return instance;
+    }
+
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
@@ -38,13 +46,5 @@ public class HotelResource {
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) throws InvalidDateException {
         return reservationService.findRooms(checkInDate, checkOutDate);
-    }
-
-    public static HotelResource getInstance() {
-        if (instance == null) {
-            instance = new HotelResource();
-        }
-
-        return instance;
     }
 }

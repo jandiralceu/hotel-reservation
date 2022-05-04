@@ -8,14 +8,18 @@ import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Scanner;
 
 public class MainMenu {
-    static Scanner scanner = new Scanner(System.in);
     static HotelResource hotelResource = HotelResource.getInstance();
 
     public static void init() {
-        while(true) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
             System.out.println("Main Menu\n" +
                     "--------------------------------------------------------\n" +
                     "1. Find and reserve a room\n" +
@@ -29,7 +33,7 @@ public class MainMenu {
             try {
                 int menuOptionSelected = scanner.nextInt();
 
-                switch(menuOptionSelected) {
+                switch (menuOptionSelected) {
                     case 1:
                         MainMenu.findAndReserveRoom();
                         break;
@@ -87,7 +91,7 @@ public class MainMenu {
             System.out.println(error.getMessage());
         }
 
-        System.out.println("\n");
+        System.out.println("");
     }
 
     public static void findAndReserveRoom() {
@@ -130,21 +134,18 @@ public class MainMenu {
                 System.out.println("\nNo rooms available. Try again later.\n");
             }
         } catch (InvalidDateException error) {
-            System.out.println("\n");
             System.out.println(error.getMessage());
-            System.out.println("\n");
+            System.out.println("");
         }
 
         if (!availableRooms.isEmpty()) {
             String bookResponse = "";
-            System.out.println("\n");
-            System.out.println("Available Rooms:");
 
+            System.out.println("\nAvailable Rooms:");
             for (IRoom room : availableRooms) {
                 System.out.println(room);
             }
-
-            System.out.println("\n");
+            System.out.println("");
 
             do {
                 System.out.println("Would you like to book a room? y/n");
@@ -159,7 +160,7 @@ public class MainMenu {
                 }
             } while (bookResponse.isBlank());
 
-            while(bookResponse.equals("y")) {
+            while (bookResponse.equals("y")) {
                 String haveAnAccount = "";
 
                 do {
@@ -173,7 +174,7 @@ public class MainMenu {
                     } else if (response.equals("y")) {
                         haveAnAccount = "y";
                     } else {
-                        System.out.println("Please, select a valid option: y/n\n");
+                        System.out.println("Please, select a valid option: y/n");
                     }
                 } while (haveAnAccount.isBlank());
 
@@ -213,9 +214,10 @@ public class MainMenu {
                     if (selectedRoom != null) {
                         Reservation reservation =
                                 hotelResource.bookARoom(customer,
-                                selectedRoom,
-                                checkinDate, checkoutDate);
+                                        selectedRoom,
+                                        checkinDate, checkoutDate);
 
+                        System.out.println("Reserved");
                         System.out.println(reservation);
                     }
                 }
@@ -230,7 +232,7 @@ public class MainMenu {
         Collection<Reservation> reservations;
         Scanner scanner = new Scanner(System.in);
 
-        while(true) {
+        while (true) {
             System.out.println("Enter email: ");
             String email = scanner.nextLine().toLowerCase();
 
@@ -244,6 +246,7 @@ public class MainMenu {
             reservations = hotelResource.getCustomersReservation(customer);
 
             if (!reservations.isEmpty()) {
+                System.out.println("");
                 for (Reservation reservation : reservations) {
                     System.out.println(reservation);
                 }
