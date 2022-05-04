@@ -65,8 +65,6 @@ public class MainMenu {
         String email = "";
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\n");
-
         do {
             System.out.println("Email:");
             email = scanner.nextLine().toLowerCase();
@@ -127,6 +125,7 @@ public class MainMenu {
 
         try {
             availableRooms = hotelResource.findARoom(checkinDate, checkoutDate);
+
             if (availableRooms.isEmpty()) {
                 System.out.println("\nNo rooms available. Try again later.\n");
             }
@@ -139,11 +138,13 @@ public class MainMenu {
         if (!availableRooms.isEmpty()) {
             String bookResponse = "";
             System.out.println("\n");
-            System.out.println("Available Rooms: \n");
+            System.out.println("Available Rooms:");
 
             for (IRoom room : availableRooms) {
                 System.out.println(room);
             }
+
+            System.out.println("\n");
 
             do {
                 System.out.println("Would you like to book a room? y/n");
@@ -225,17 +226,19 @@ public class MainMenu {
     }
 
     public static void getCustomerReservations() {
-        String email = "";
         Customer customer = null;
         Collection<Reservation> reservations;
         Scanner scanner = new Scanner(System.in);
 
-        do {
+        while(true) {
             System.out.println("Enter email: ");
-            email = scanner.nextLine().toLowerCase();
-        } while (email.isBlank());
+            String email = scanner.nextLine().toLowerCase();
 
-        customer = hotelResource.getCustomer(email);
+            if (!email.isBlank()) {
+                customer = hotelResource.getCustomer(email);
+                break;
+            }
+        }
 
         if (customer != null) {
             reservations = hotelResource.getCustomersReservation(customer);

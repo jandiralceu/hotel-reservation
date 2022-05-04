@@ -6,6 +6,7 @@ public class Room implements IRoom {
     private final Double price;
     private final String roomNumber;
     private final RoomType enumeration;
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     public Room(Double price, String roomNumber, RoomType enumeration) {
         this.price = price;
@@ -18,8 +19,7 @@ public class Room implements IRoom {
     }
 
     public Double getRoomPrice() {
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        return Double.valueOf(decimalFormat.format(price));
+        return price;
     }
 
     public RoomType getRoomType() {
@@ -27,7 +27,7 @@ public class Room implements IRoom {
     }
 
     public String getRoomTypeDescription() {
-        return enumeration  == RoomType.SINGLE ? "Single" : "Double";
+        return enumeration  == RoomType.SINGLE ? "Single bed" : "Double bed";
     }
 
     public boolean isFree() {
@@ -38,6 +38,6 @@ public class Room implements IRoom {
     public String toString() {
         return "Room Number: " + getRoomNumber() +
                 "\tRoom Type: " + getRoomTypeDescription() +
-                "\tPrice: $" + getRoomPrice();
+                "\tPrice: $" + decimalFormat.format(price) + " per night";
     }
 }

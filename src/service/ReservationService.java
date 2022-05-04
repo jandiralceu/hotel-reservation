@@ -46,8 +46,8 @@ public class ReservationService {
         List<String> unAvailableRooms = new ArrayList<String>();
 
         for (Reservation reservation : reservations) {
-            if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0
-                    && checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+            if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0 ||
+                    checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
                 unAvailableRooms.add(reservation.getRoom().getRoomNumber());
             }
         }
@@ -76,12 +76,13 @@ public class ReservationService {
             System.out.println("Sorry, there is no reservation. Go to main " +
                     "menu and start creating.");
         } else {
+            System.out.println("Reservations:");
             for (Reservation reservation : reservations) {
                 System.out.println(reservation.toString());
             }
         }
 
-        System.out.println("\n");
+        System.out.println("");
     }
 
     public static ReservationService getInstance() {
