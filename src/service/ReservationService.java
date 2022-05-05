@@ -7,9 +7,6 @@ import model.Reservation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ReservationService {
@@ -55,16 +52,6 @@ public class ReservationService {
         }
         DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
         String formattedCheckinDate = dateFormatter.format(checkInDate);
-//        String formattedCheckoutDate = dateFormatter.format(checkOutDate);
-
-//        long daysNumberDifference =
-//                ChronoUnit.DAYS.between(LocalDate.parse(formattedCheckinDate)
-//                        , LocalDate.parse(formattedCheckoutDate));
-
-//        if (daysNumberDifference < 1) {
-//            throw new InvalidDateException("Check-in and Check-out must be a " +
-//                    "1 day difference,");
-//        }
 
         Date date = new Date();
         String currentDate = dateFormatter.format(date);
@@ -108,6 +95,10 @@ public class ReservationService {
 
         for (String room : unAvailableRooms) {
             availableRooms.remove(room);
+        }
+
+        if (availableRooms.isEmpty() && !reservations.isEmpty()) {
+            System.out.println("Suggestions");
         }
 
         return new ArrayList<IRoom>(availableRooms.values());

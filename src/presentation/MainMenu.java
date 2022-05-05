@@ -71,7 +71,7 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.println("Email:");
+            System.out.println("Email: eg: name@domain.com");
             email = scanner.nextLine().toLowerCase();
         } while (email.isBlank());
 
@@ -149,41 +149,41 @@ public class MainMenu {
 
             do {
                 System.out.println("Would you like to book a room? y/n");
-                String response = scanner.nextLine().toLowerCase();
+                String response = scanner.nextLine();
 
-                if (response.equals("n")) {
+                if (response.equalsIgnoreCase("n")) {
                     break;
-                } else if (response.equals("y")) {
+                } else if (response.equalsIgnoreCase("y")) {
                     bookResponse = "y";
                 } else {
                     System.out.println("Please, select a valid option.");
                 }
             } while (bookResponse.isBlank());
 
-            while (bookResponse.equals("y")) {
+            while (bookResponse.equalsIgnoreCase("y")) {
                 String haveAnAccount = "";
 
                 do {
                     System.out.println("Do you have an account with us? y/n");
-                    String response = scanner.nextLine().toLowerCase();
+                    String response = scanner.nextLine();
 
-                    if (response.equals("n")) {
+                    if (response.equalsIgnoreCase("n")) {
                         System.out.println("Please, create an account first" +
                                 ".\n");
                         break;
-                    } else if (response.equals("y")) {
+                    } else if (response.equalsIgnoreCase("y")) {
                         haveAnAccount = "y";
                     } else {
                         System.out.println("Please, select a valid option.");
                     }
                 } while (haveAnAccount.isBlank());
 
-                if (haveAnAccount.equals("y")) {
+                if (haveAnAccount.equalsIgnoreCase("y")) {
                     String email = "";
                     Customer customer;
 
                     do {
-                        System.out.println("Enter email: ");
+                        System.out.println("Enter email: eg. name@domain.com");
                         email = scanner.nextLine().toLowerCase();
                     } while (email.isBlank());
 
@@ -233,7 +233,7 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter email: ");
+            System.out.println("Enter email: eg: name@domain.com");
             String email = scanner.nextLine().toLowerCase();
 
             if (!email.isBlank()) {

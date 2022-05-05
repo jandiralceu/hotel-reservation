@@ -3,6 +3,7 @@ package model;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class Reservation {
     private final Customer customer;
@@ -34,6 +35,24 @@ public class Reservation {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Reservation)) {
+            return false;
+        }
+
+        Reservation reservation = (Reservation) obj;
+
+        return this.room.equals(reservation.room) &&
+                this.customer.equals(reservation.customer) &&
+                this.checkInDate.equals(reservation.checkInDate) &&
+                this.checkoutDate.equals(reservation.checkoutDate);
+    }
+
+    @Override
     public String toString() {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
@@ -45,5 +64,10 @@ public class Reservation {
                 "Price: $" + decimalFormat.format(room.getRoomPrice()) + " per night\n" +
                 "Check-in: " + dateFormat.format(checkInDate) + "\t" +
                 "Check-out: " + dateFormat.format(checkoutDate) + "\n";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customer, room, checkInDate, checkoutDate);
     }
 }

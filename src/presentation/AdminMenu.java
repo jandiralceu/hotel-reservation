@@ -169,18 +169,18 @@ public class AdminMenu {
 
             do {
                 System.out.println("\nWould you like to add another room? y/n");
-                String response = scanner.nextLine().toLowerCase();
+                String response = scanner.nextLine();
 
-                if (response.equals("n")) {
+                if (response.equalsIgnoreCase("n")) {
                     adminResource.addRoom(rooms);
                     answer = response;
                     break;
-                } else if (response.equals("y")) {
+                } else if (response.equalsIgnoreCase("y")) {
                     answer = response;
                 } else {
                     System.out.println("Please, select a valid option: y/n");
                 }
             } while (answer.isBlank());
-        } while (!answer.equals("n"));
+        } while (!answer.equalsIgnoreCase("n"));
     }
 }
