@@ -5,6 +5,11 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ReservationService {
@@ -48,17 +53,53 @@ public class ReservationService {
         if (checkOutDate.before(checkInDate) || checkInDate.equals(checkOutDate)) {
             throw new InvalidDateException("Check-out must be after check-in.");
         }
+        DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+        String formattedCheckinDate = dateFormatter.format(checkInDate);
+//        String formattedCheckoutDate = dateFormatter.format(checkOutDate);
 
-        if (checkInDate.before(new Date())) {
-            throw new InvalidDateException("Please, provide present and " +
-                    "future date");
+//        long daysNumberDifference =
+//                ChronoUnit.DAYS.between(LocalDate.parse(formattedCheckinDate)
+//                        , LocalDate.parse(formattedCheckoutDate));
+
+//        if (daysNumberDifference < 1) {
+//            throw new InvalidDateException("Check-in and Check-out must be a " +
+//                    "1 day difference,");
+//        }
+
+        Date date = new Date();
+        String currentDate = dateFormatter.format(date);
+
+        if (checkInDate.compareTo(date) < 0 && !currentDate.equals(formattedCheckinDate)) {
+            throw new InvalidDateException("Please, check-in date can't be " +
+                    "a date before today.");
         }
 
-        List<String> unAvailableRooms = new ArrayList<String>();
+        if (reservations.isEmpty() && !rooms.isEmpty()) {
+            return new ArrayList<IRoom>(rooms.values());
+        }
+
+        Set<String> unAvailableRooms = new HashSet<String>();
 
         for (Reservation reservation : reservations) {
-            if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0 ||
-                    checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+            /* Check if provided checkin and checkout are inside created
+            reservations. */
+            if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
+                continue;
+            }
+
+            if (checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
+                continue;
+            }
+
+            /* Check if provided checkin and checkout don't overflow created
+            reservations. */
+            if (reservation.getCheckInDate().compareTo(checkInDate) >= 0 && reservation.getCheckInDate().compareTo(checkOutDate) <= 0) {
+                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
+                continue;
+            }
+            if (reservation.getCheckoutDate().compareTo(checkInDate) >= 0 && reservation.getCheckoutDate().compareTo(checkOutDate) <= 0) {
                 unAvailableRooms.add(reservation.getRoom().getRoomNumber());
             }
         }
@@ -84,15 +125,15 @@ public class ReservationService {
 
     public void printAllReservations() {
         if (reservations.isEmpty()) {
+            System.out.println("");
             System.out.println("Sorry, there is no reservation. Go to main " +
                     "menu and start creating.");
+            System.out.println("");
         } else {
             System.out.println("Reservations:");
             for (Reservation reservation : reservations) {
                 System.out.println(reservation.toString());
             }
         }
-
-        System.out.println("");
     }
 }

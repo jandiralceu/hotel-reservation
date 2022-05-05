@@ -6,6 +6,7 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,7 +87,6 @@ public class MainMenu {
 
         try {
             hotelResource.addACustomer(email, firstName, lastName);
-            System.out.println("Welcome to the hotel reservation application.");
         } catch (Exception error) {
             System.out.println(error.getMessage());
         }
@@ -97,9 +97,9 @@ public class MainMenu {
     public static void findAndReserveRoom() {
         Date checkinDate = null;
         Date checkoutDate = null;
-        Collection<IRoom> availableRooms = new ArrayList<IRoom>();
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
         Scanner scanner = new Scanner(System.in);
+        Collection<IRoom> availableRooms = new ArrayList<IRoom>();
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
         do {
             try {
@@ -156,7 +156,7 @@ public class MainMenu {
                 } else if (response.equals("y")) {
                     bookResponse = "y";
                 } else {
-                    System.out.println("Please, select a valid option: y/n\n");
+                    System.out.println("Please, select a valid option.");
                 }
             } while (bookResponse.isBlank());
 
@@ -174,7 +174,7 @@ public class MainMenu {
                     } else if (response.equals("y")) {
                         haveAnAccount = "y";
                     } else {
-                        System.out.println("Please, select a valid option: y/n");
+                        System.out.println("Please, select a valid option.");
                     }
                 } while (haveAnAccount.isBlank());
 
@@ -247,6 +247,7 @@ public class MainMenu {
 
             if (!reservations.isEmpty()) {
                 System.out.println("");
+                System.out.println("User Reservations:");
                 for (Reservation reservation : reservations) {
                     System.out.println(reservation);
                 }
