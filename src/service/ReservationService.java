@@ -14,8 +14,7 @@ public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<Reservation>();
     private final Map<String, IRoom> rooms = new HashMap<String, IRoom>();
 
-    private ReservationService() {
-    }
+    private ReservationService() {}
 
     public static ReservationService getInstance() {
         if (instance == null) {
@@ -68,25 +67,7 @@ public class ReservationService {
         Set<String> unAvailableRooms = new HashSet<String>();
 
         for (Reservation reservation : reservations) {
-            /* Check if provided checkin and checkout are inside created
-            reservations. */
-            if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0) {
-                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
-                continue;
-            }
-
-            if (checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
-                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
-                continue;
-            }
-
-            /* Check if provided checkin and checkout don't overflow created
-            reservations. */
-            if (reservation.getCheckInDate().compareTo(checkInDate) >= 0 && reservation.getCheckInDate().compareTo(checkOutDate) <= 0) {
-                unAvailableRooms.add(reservation.getRoom().getRoomNumber());
-                continue;
-            }
-            if (reservation.getCheckoutDate().compareTo(checkInDate) >= 0 && reservation.getCheckoutDate().compareTo(checkOutDate) <= 0) {
+            if (dateNotAvailable(checkInDate, checkOutDate, reservation)) {
                 unAvailableRooms.add(reservation.getRoom().getRoomNumber());
             }
         }
@@ -102,6 +83,27 @@ public class ReservationService {
         }
 
         return new ArrayList<IRoom>(availableRooms.values());
+    }
+
+    boolean dateNotAvailable(Date checkInDate, Date checkOutDate,
+                              Reservation reservation) {
+        /* Check if provided checkin and checkout are inside created
+        reservations. */
+        if (checkInDate.compareTo(reservation.getCheckInDate()) >= 0 && checkInDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+            return true;
+        }
+
+        if (checkOutDate.compareTo(reservation.getCheckInDate()) >= 0 && checkOutDate.compareTo(reservation.getCheckoutDate()) <= 0) {
+            return true;
+        }
+
+        /* Check if provided checkin and checkout don't overflow created
+        reservations. */
+        if (reservation.getCheckInDate().compareTo(checkInDate) >= 0 && reservation.getCheckInDate().compareTo(checkOutDate) <= 0) {
+            return true;
+        }
+
+        return reservation.getCheckoutDate().compareTo(checkInDate) >= 0 && reservation.getCheckoutDate().compareTo(checkOutDate) <= 0;
     }
 
     public Collection<Reservation> getCustomersReservation(Customer customer) {
