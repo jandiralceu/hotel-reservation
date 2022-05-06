@@ -128,7 +128,7 @@ public class ReservationService {
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd" +
                         "/yyyy");
                 long daysAmount = ChronoUnit.DAYS.between(checkInDate.toInstant(),
-                        checkOutDate.toInstant()) + 1;
+                        checkOutDate.toInstant());
                 Calendar c = Calendar.getInstance();
                 c.setTime(availableDate);
 
