@@ -7,9 +7,6 @@ import model.Reservation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -17,8 +14,6 @@ public class ReservationService {
     private static ReservationService instance;
     private final List<Reservation> reservations = new ArrayList<Reservation>();
     private final Map<String, IRoom> rooms = new HashMap<String, IRoom>();
-
-    boolean hasRecommendedDates = false;
 
     private ReservationService() {}
 
