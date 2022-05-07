@@ -9,10 +9,7 @@ import model.Reservation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainMenu {
     static HotelResource hotelResource = HotelResource.getInstance();
@@ -130,12 +127,34 @@ public class MainMenu {
         try {
             availableRooms = hotelResource.findARoom(checkinDate, checkoutDate);
 
-            if (availableRooms.isEmpty()) {
-                System.out.println("\nNo rooms available. Try again later.\n");
+            if (availableRooms.isEmpty() && !hotelResource.getAllRooms().isEmpty()) {
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd" +
+                        "/yyyy");
+
+                while (availableRooms.isEmpty()) {
+                    checkinDate = hotelResource.addRecommendationDays(checkinDate);
+                    checkoutDate =
+                            hotelResource.addRecommendationDays(checkoutDate);
+
+                    availableRooms = hotelResource.findARoom(checkinDate, checkoutDate);
+
+                    if (!availableRooms.isEmpty()) {
+                        System.out.println("\nNew Dates");
+                        System.out.println("Checkin: " + dateFormat.format(checkinDate) + "\t" +
+                                "Checkout: " + dateFormat.format(checkoutDate));
+                    }
+                }
             }
-        } catch (InvalidDateException error) {
+
+
+        } catch (InvalidDateException  error) {
             System.out.println(error.getMessage());
             System.out.println("");
+        }
+
+        if (availableRooms.isEmpty() && hotelResource.getAllRooms().isEmpty()) {
+            System.out.println("\nNo rooms available. Try again later" +
+                    ".\n");
         }
 
         if (!availableRooms.isEmpty()) {

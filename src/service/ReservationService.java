@@ -7,7 +7,6 @@ import model.Reservation;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class ReservationService {
@@ -79,10 +78,6 @@ public class ReservationService {
             availableRooms.remove(room);
         }
 
-        if (availableRooms.isEmpty() && !reservations.isEmpty()) {
-            recommendedDates(checkInDate, checkOutDate);
-        }
-
         return new ArrayList<IRoom>(availableRooms.values());
     }
 
@@ -107,44 +102,12 @@ public class ReservationService {
         return reservation.getCheckoutDate().compareTo(checkInDate) >= 0 && reservation.getCheckoutDate().compareTo(checkOutDate) <= 0;
     }
 
-    void recommendedDates(Date checkInDate, Date checkOutDate) {
-        List<String> roomNumbers = new ArrayList<String>(rooms.keySet());
-        Set<String> recommended = new HashSet<String>();
+    public Date addRecommendedDays(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
 
-        for (String number : roomNumbers) {
-            Date availableDate = reservations.stream()
-                    .filter(reservation -> reservation.getRoom().getRoomNumber().equals(number))
-                    .map(Reservation::getCheckoutDate)
-                    .max(Date::compareTo)
-                    .orElse(null);
-
-
-            if (availableDate != null) {
-                DateFormat dateFormat = new SimpleDateFormat("MM/dd" +
-                        "/yyyy");
-                long daysAmount = ChronoUnit.DAYS.between(checkInDate.toInstant(),
-                        checkOutDate.toInstant());
-                Calendar c = Calendar.getInstance();
-                c.setTime(availableDate);
-
-                c.add(Calendar.DAY_OF_MONTH, 1);
-                Date initialDate = c.getTime();
-
-                c.add(Calendar.DAY_OF_MONTH, (int) daysAmount);
-                Date endDate = c.getTime();
-
-                recommended.add("Checkin: " + dateFormat.format(initialDate) + "\t" + "Checkout: " + dateFormat.format(endDate));
-            }
-        }
-
-        if (!recommended.isEmpty()) {
-            System.out.println("");
-            System.out.println("Suggestions");
-
-            for (String item : recommended) {
-                System.out.println(item);
-            }
-        }
+        return calendar.getTime();
     }
 
     public Collection<Reservation> getCustomersReservation(Customer customer) {

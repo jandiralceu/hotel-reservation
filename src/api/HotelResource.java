@@ -31,6 +31,10 @@ public class HotelResource {
         customerService.addCustomer(email, firstName, lastName);
     }
 
+    public Collection<IRoom> getAllRooms() {
+        return reservationService.getAllRooms();
+    }
+
     public IRoom getRoom(String roomNumber) {
         return reservationService.getARoom(roomNumber);
     }
@@ -46,5 +50,9 @@ public class HotelResource {
 
     public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) throws InvalidDateException {
         return reservationService.findRooms(checkInDate, checkOutDate);
+    }
+
+    public Date addRecommendationDays(Date date) {
+        return reservationService.addRecommendedDays(date);
     }
 }
