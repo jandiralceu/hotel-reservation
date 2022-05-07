@@ -139,6 +139,9 @@ public class MainMenu {
                     availableRooms = hotelResource.findARoom(checkinDate, checkoutDate);
 
                     if (!availableRooms.isEmpty()) {
+                        System.out.println("No rooms available for " +
+                                "the selected date. See our recommendation " +
+                                "bellow:");
                         System.out.println("\nNew Dates");
                         System.out.println("Checkin: " + dateFormat.format(checkinDate) + "\t" +
                                 "Checkout: " + dateFormat.format(checkoutDate));
